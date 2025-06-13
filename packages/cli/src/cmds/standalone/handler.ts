@@ -13,16 +13,18 @@ import { Executor } from "@skandha/executor/lib/executor";
 import logger from "@skandha/api/lib/logger";
 import { createMetrics, getHttpMetricsServer } from "@skandha/monitoring/lib";
 import { mkdir, readFile } from "../../util";
-import { IStandaloneGlobalArgs } from "../../options";
+import { IStandaloneGlobalArgs, ILogArgs } from "../../options";
 import { getVersionData } from "../../util/version";
 
 export async function bundlerHandler(
-  args: IStandaloneGlobalArgs
+  args: IStandaloneGlobalArgs & ILogArgs
 ): Promise<void> {
   const { dataDir, testingMode, unsafeMode, redirectRpc, configFile } = args;
 
   //create the necessary directories
   mkdir(dataDir);
+
+  logger.level = args["logLevel"] || logger.level;
 
   logger.info("  ___                                            ___  ");
   logger.info(" (o o)                                          (o o) ");

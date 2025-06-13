@@ -1,7 +1,7 @@
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 import { cmds } from "./cmds";
-import { globalOptions } from "./options";
+import { globalOptions, logOptions } from "./options";
 import { registerCommandToYargs } from "./util";
 import { getVersionData } from "./util/version";
 
@@ -29,7 +29,7 @@ export function getSkandhaCli(): yargs.Argv {
       // Manually processing options is typesafe tho more verbose
       "dot-notation": false,
     })
-    .options(globalOptions)
+    .options({ ...globalOptions, ...logOptions })
     // blank scriptName so that help text doesn't display the cli name before each command
     .scriptName("")
     .demandCommand(1)
